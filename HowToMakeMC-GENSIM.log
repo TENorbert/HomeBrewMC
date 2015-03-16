@@ -1,0 +1,21 @@
+## Steps to make MC
+
+### Step 1 GEN-SIM
+cmsDriver.py Configuration/GenProduction/python/EightTeV/GMSB_Lambda260_CTau12000_8TeV_pythia6_cff.py --step GEN,SIM --conditions=START61_V11::All --beamspot Realistic8TeVCollision --pileup 2012_Summer_50ns_PoissonOOTPU --datatier GEN-SIM --mc --eventcontent RAWSIM -n 60000 --no_exec
+
+
+
+## DIGI  to  HLT
+cmsDriver.py step1 --filein "file:EXO-Summer12-L180-ct500.root" --fileout file:EXO-Summer12-L180-ct500-step1.root --mc --eventcontent RAWSIM --pileup 2012_Summer_50ns_PoissonOOTPU --customise Configuration/GlobalRuns/reco_TLR_42X.customisePPMC  --datatier GEN-SIM-RAW --conditions START61_V11::All --step DIGI,L1,DIGI2RAW,HLT:7E33v3 -n 2 --no_exec
+
+### HLT- to RECO
+cmsDriver.py step2 --filein "file:EXO-Summer12-L180-ct500-step1.root" --fileout file:EXO-Summer12-L180-ct500-step2-RECO.root --mc --eventcontent RECOSIM,DQM --datatier RECOSIM,DQM --conditions START61_V11::All -s RAW2DIGI,L1Reco,RECO,DQM:DQMOfflinePOGMC -n 2 --no_exec
+
+
+###Don't forget to do
+cmsRun <configfileName.py>
+## on each step!!
+
+
+
+
